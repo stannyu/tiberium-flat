@@ -1,9 +1,26 @@
 const arrayTiberiumHelper = {
-  getFlatArray: function(arr) {
-    const deepFlatten = arr =>
-      [].concat(...arr.map(v => (Array.isArray(v) ? deepFlatten(v) : v)));
-    return deepFlatten(arr);
+  /**
+   *
+   * @param arr {Array || Array<[]>}
+   * @returns {*[]}
+   *
+   * Deep flattens an array.Use recursion.
+   * Use Array.concat() with an empty array ([]) and the spread operator (...) to flatten an array.
+   * Recursively flatten each element that is an array.
+   */
+  deepFlatten: function(arr) {
+    return [].concat(...arr.map(v => (Array.isArray(v) ? this.deepFlatten(v) : v)));
   },
+  /**
+   *
+   * @param arr {Array}
+   * @param filter {Array}
+   * @returns {Array<[]>}
+   *
+   * Splits values into two groups. If an element in filter is truthy,
+   * the corresponding element in the collection belongs to the first group; otherwise,
+   * it belongs to the second group.Use Array.reduce() and Array.push() to add elements to groups, based on filter.
+   */
   bifurcate: function(arr, filter) {
     return arr.reduce(
       (acc, val, i) => (acc[filter[i] ? 0 : 1].push(val), acc),
@@ -54,6 +71,22 @@ const arrayTiberiumHelper = {
    */
   compact: function(arr) {
     return arr.filter(Boolean);
+  },
+  /**
+   *
+   * @param arr {Array}
+   * @param fn {Function}
+   * @returns {number | * | number}
+   *
+   * Groups the elements of an array based on the given function and returns the count of elements in each group.
+   * Use Array.map() to map the values of an array to a function or property name.
+   * Use Array.reduce() to create an object, where the keys are produced from the mapped results.
+   */
+  countBy: function (arr, fn) {
+    return arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val, i) => {
+      acc[val] = (acc[val] || 0) + 1;
+      return acc;
+    }, {});
   }
 };
 
