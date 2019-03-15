@@ -10,7 +10,7 @@ const arrayTiberiumHelper = {
    */
   deepFlatten: function(arr) {
     let dF = arr => [].concat(...arr.map(v => (Array.isArray(v) ? dF(v) : v)));
-    
+
     return dF(arr);
   },
   /**
@@ -91,6 +91,18 @@ const arrayTiberiumHelper = {
         acc[val] = (acc[val] || 0) + 1;
         return acc;
       }, {});
+  },
+  /**
+   *
+   * @param arr {Array<any>}
+   * @param val {any}
+   * @returns {Number}
+   *
+   * Counts the occurrences of a value in an array.
+   * Use Array.reduce() to increment a counter each time you encounter the specific value inside the array.
+   */
+  countOccurrences: function(arr, val) {
+    return arr.reduce((a, v) => (v === val ? a + 1 : a + 0), 0);
   }
 };
 
