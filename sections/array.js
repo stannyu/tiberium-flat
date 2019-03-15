@@ -29,9 +29,9 @@ const arrayTiberiumHelper = {
   },
   /**
    *
-   * @param arr {Array}
+   * @param arr {[]}
    * @param size {Number}
-   * @returns {(T[])}
+   * @returns {(Array<[]>)}
    *
    * Chunks an array into smaller arrays of a specified size.
    * Use Array.from() to create a new array, that fits the number of chunks that will be produced.
@@ -39,12 +39,21 @@ const arrayTiberiumHelper = {
    * If the original array can't be split evenly, the final chunk will contain the remaining elements.
    */
   chunk: function(arr, size) {
-    let chunkedArrays = Array.from(
-      { length: Math.ceil(arr.length / size) },
-      (v, i) => arr.slice(i * size, i * size + size)
-    );
+    const chunkedArraysLength = { length: Math.ceil(arr.length / size) };
+    const mapingFn = (v, i) => arr.slice(i * size, i * size + size);
 
-    return chunkedArrays;
+    return Array.from(chunkedArraysLength, mapingFn);
+  },
+  /**
+   *
+   * @param arr {Array}
+   * @returns {Array}
+   *
+   *  Removes falsey values from an array.
+   *  Use Array.filter() to filter out falsey values (false, null, 0, "", undefined, and NaN).
+   */
+  compact: function(arr) {
+    return arr.filter(Boolean);
   }
 };
 
