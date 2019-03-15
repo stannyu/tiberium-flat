@@ -9,7 +9,9 @@ const arrayTiberiumHelper = {
    * Recursively flatten each element that is an array.
    */
   deepFlatten: function(arr) {
-    return [].concat(...arr.map(v => (Array.isArray(v) ? this.deepFlatten(v) : v)));
+    let dF = arr => [].concat(...arr.map(v => (Array.isArray(v) ? dF(v) : v)));
+    
+    return dF(arr);
   },
   /**
    *
@@ -82,11 +84,13 @@ const arrayTiberiumHelper = {
    * Use Array.map() to map the values of an array to a function or property name.
    * Use Array.reduce() to create an object, where the keys are produced from the mapped results.
    */
-  countBy: function (arr, fn) {
-    return arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val, i) => {
-      acc[val] = (acc[val] || 0) + 1;
-      return acc;
-    }, {});
+  countBy: function(arr, fn) {
+    return arr
+      .map(typeof fn === "function" ? fn : val => val[fn])
+      .reduce((acc, val, i) => {
+        acc[val] = (acc[val] || 0) + 1;
+        return acc;
+      }, {});
   }
 };
 
