@@ -103,6 +103,19 @@ const arrayTiberiumHelper = {
    */
   countOccurrences: function(arr, val) {
     return arr.reduce((a, v) => (v === val ? a + 1 : a + 0), 0);
+  },
+  /**
+   *
+   * @param a {Array<any>}
+   * @param b {Array<any>}
+   * @returns {Array<any>}
+   *
+   * Returns the difference between two arrays.
+   * Create a Set from b, then use Array.filter() on a to only keep values not contained in b.
+   */
+  difference: function(a, b) {
+    const s = new Set(b);
+    return a.filter(x => !s.has(x));
   }
 };
 
