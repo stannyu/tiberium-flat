@@ -116,6 +116,21 @@ const arrayTiberiumHelper = {
   difference: function(a, b) {
     const s = new Set(b);
     return a.filter(x => !s.has(x));
+  },
+  /**
+   *
+   * @param a {Array<any>}
+   * @param b {Array<any>}
+   * @param fn {Function}
+   * @returns {Array<any>}
+   *
+   * Returns the difference between two arrays, after applying the provided function to each array element of both.
+   * Create a Set by applying fn to each element in b, then use Array.filter() in combination with fn on a
+   * to only keep values not contained in the previously created set.
+   */
+  differenceBy: function (a, b, fn) {
+    const s = new Set(b.map(v => fn(v)));
+    return a.filter(x => !s.has(fn(x)));
   }
 };
 

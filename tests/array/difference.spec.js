@@ -9,8 +9,6 @@ describe('testing difference method', () => {
     const executedValue = difference(a, b);
     const expectedValue = [3];
     
-    console.log(executedValue);
-    
     expect(executedValue).toEqual(expectedValue);
   });
   
