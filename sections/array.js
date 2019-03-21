@@ -151,8 +151,20 @@ const arrayTiberiumHelper = {
    * @param n {Number || null || undefined}
    * @returns {Array<any>}
    */
-  drop: function (arr, n=1) {
+  drop: function(arr, n = 1) {
     return arr.slice(n);
+  },
+  /**
+   *
+   * @param arr {Array<any>}
+   * @param n {Number || null || undefined}
+   * @returns {Array<any>}
+   *
+   * Returns a new array with n elements removed from the right.
+   * Use Array.slice() to slice the remove the specified number of elements from the right.
+   */
+  dropRight: function(arr, n = 1) {
+    return arr.slice(0, -n);
   }
 };
 
