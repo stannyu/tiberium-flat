@@ -128,9 +128,22 @@ const arrayTiberiumHelper = {
    * Create a Set by applying fn to each element in b, then use Array.filter() in combination with fn on a
    * to only keep values not contained in the previously created set.
    */
-  differenceBy: function (a, b, fn) {
+  differenceBy: function(a, b, fn) {
     const s = new Set(b.map(v => fn(v)));
     return a.filter(x => !s.has(fn(x)));
+  },
+  /**
+   *
+   * @param arr {Array<any>}
+   * @param val {Array<any>}
+   * @param comp {Function}
+   * @returns {Array<any>}
+   *
+   * Filters out all values from an array for which the comparator function does not return true.
+   * Use Array.filter() and Array.findIndex() to find the appropriate values.
+   */
+  differenceWith: function(arr, val, comp) {
+    return arr.filter(a => val.findIndex(b => comp(a, b)) === -1);
   }
 };
 
