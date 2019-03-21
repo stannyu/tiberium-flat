@@ -165,6 +165,35 @@ const arrayTiberiumHelper = {
    */
   dropRight: function(arr, n = 1) {
     return arr.slice(0, -n);
+  },
+  /**
+   *
+   * @param arr {Array<any>}
+   * @param func {Function}
+   * @returns {Array<any>}
+   *
+   * Removes elements from the end of an array until the passed function returns true.
+   * Returns the remaining elements in the array.Loop through the array,
+   * using Array.slice() to drop the last element of the array until the returned value from the function is true.
+   * Returns the remaining elements.
+   */
+  dropRightWhile: function(arr, func) {
+    while (arr.length > 0 && !func(arr[arr.length - 1])) arr = arr.slice(0, -1);
+    return arr;
+  },
+  /**
+   *
+   * @param arr {Array<any>}
+   * @param func {Function}
+   * @returns {Array<any>}
+   *
+   * Removes elements in an array until the passed function returns true. Returns the remaining elements in the array.
+   * Loop through the array, using Array.slice() to drop the first element of the array until the
+   * returned value from the function is true. Returns the remaining elements.
+   */
+  dropWhile: function(arr, func) {
+    while (arr.length > 0 && !func(arr[0])) arr = arr.slice(1);
+    return arr;
   }
 };
 

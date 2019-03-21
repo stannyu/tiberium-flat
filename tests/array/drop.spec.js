@@ -57,4 +57,30 @@ describe('testing all drop methods of an array helper', () => {
     expect(resultValue).toHaveLength(0);
     expect(resultValue).toBeTruthy();
   });
+  
+  it('dropRightWhile should return new array of 2 elements according to predicate function remove from right', () => {
+    const arr = [1,2,3,4];
+    const predicate = n => n < 3;
+    const dropRightWhile = arrHelper.dropRightWhile;
+    
+    const resultValue = dropRightWhile(arr, predicate);
+    const expectedVal = [1,2];
+    
+    expect(resultValue).toEqual(expectedVal);
+    expect(resultValue).toHaveLength(2);
+    expect(resultValue).toBeTruthy();
+  });
+  
+  it('dropWhile should return new array of 2 elements according to predicate function remove from left', () => {
+    const arr = [1,2,3,4];
+    const predicate = n => n >= 3;
+    const dropWhile = arrHelper.dropWhile;
+    
+    const resultValue = dropWhile(arr, predicate);
+    const expectedVal = [3,4];
+    
+    expect(resultValue).toEqual(expectedVal);
+    expect(resultValue).toHaveLength(2);
+    expect(resultValue).toBeTruthy();
+  });
 });
