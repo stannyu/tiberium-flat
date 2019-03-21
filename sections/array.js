@@ -144,6 +144,15 @@ const arrayTiberiumHelper = {
    */
   differenceWith: function(arr, val, comp) {
     return arr.filter(a => val.findIndex(b => comp(a, b)) === -1);
+  },
+  /**
+   *
+   * @param arr {Array<any>}
+   * @param n {Number || null || undefined}
+   * @returns {Array<any>}
+   */
+  drop: function (arr, n=1) {
+    return arr.slice(n);
   }
 };
 
