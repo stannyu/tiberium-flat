@@ -251,6 +251,12 @@ const arrayTiberiumHelper = {
    * @param arr {Array<any>}
    * @param depth {Number}
    * @returns {Array<any>}
+   *
+   * Flattens an array up to the specified depth.
+   * Use recursion, decrementing depth by 1 for each level of depth.
+   * Use Array.reduce() and Array.concat() to merge elements or arrays.
+   * Base case, for depth equal to 1 stops recursion.
+   * Omit the second argument, depth to flatten only to a depth of 1 (single flatten).
    */
   flatten: function(arr, depth = 1) {
     const f = (arr, depth) =>
@@ -262,6 +268,37 @@ const arrayTiberiumHelper = {
         : arr.reduce((a, v) => a.concat(v), []);
 
     return f(arr, depth);
+  },
+  /**
+   *
+   * @param arr {Array<any>}
+   * @param cb {Function}
+   *
+   * Executes a provided function once for each array element, starting from the array's last element.
+   * Use Array.slice(0) to clone the given array, Array.reverse() to reverse it and Array.forEach()
+   * to iterate over the reversed array.
+   */
+  forEachRight: function(arr, cb) {
+    arr
+      .slice(0)
+      .reverse()
+      .forEach(cb);
+  },
+  /**
+   *
+   * @param arr {Array<any>}
+   * @param fn {Function}
+   * @return {Object}
+   *
+   * Groups the elements of an array based on the given function.
+   * Use Array.map() to map the values of an array to a function or property name.
+   * Use Array.reduce() to create an object, where the keys are produced from the mapped results.
+   */
+  groupBy: function (arr, fn) {
+    return arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val, i) => {
+      acc[val] = (acc[val] || []).concat(arr[i]);
+      return acc;
+    }, {})
   }
 };
 
