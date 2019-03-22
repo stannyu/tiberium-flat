@@ -204,7 +204,7 @@ const arrayTiberiumHelper = {
    * Returns every nth element in an array.
    * Use Array.filter() to create a new array that contains every nth element of a given array.
    */
-  everyNth: function (arr, nth) {
+  everyNth: function(arr, nth) {
     return arr.filter((e, i) => i % nth === nth - 1);
   },
   /**
@@ -215,8 +215,53 @@ const arrayTiberiumHelper = {
    * Filters out the non-unique values in an array.
    * Use Array.filter() for an array containing only the unique values.
    */
-  filterNonUnique: function (arr) {
-    return arr.filter(i => arr.indexOf(i) === arr.lastIndexOf(i))
+  filterNonUnique: function(arr) {
+    return arr.filter(i => arr.indexOf(i) === arr.lastIndexOf(i));
+  },
+  /**
+   *
+   * @param arr {Array}
+   * @param fn {Function}
+   * @returns {Number}
+   *
+   * Returns the last element for which the provided function returns a truthy value.
+   * Use Array.filter() to remove elements for which fn returns falsey values, Array.slice(-1) to get the last one.
+   */
+  findLast: function(arr, fn) {
+    return arr.filter(fn).slice(-1)[0];
+  },
+  /**
+   *
+   * @param arr {Array}
+   * @param fn {Function}
+   * @returns {Number}
+   *
+   * Returns the index of the last element for which the provided function returns a truthy value.
+   * Use Array.map() to map each element to an array with its index and value.
+   * Use Array.filter() to remove elements for which fn returns falsey values, Array.slice(-1) to get the last one.
+   */
+  findLastIndex: function(arr, fn) {
+    return arr
+      .map((val, i) => [i, val])
+      .filter(val => fn(val[1], val[0], arr))
+      .slice(-1)[0][0];
+  },
+  /**
+   *
+   * @param arr {Array<any>}
+   * @param depth {Number}
+   * @returns {Array<any>}
+   */
+  flatten: function(arr, depth = 1) {
+    const f = (arr, depth) =>
+      depth !== 1
+        ? arr.reduce(
+            (a, v) => a.concat(Array.isArray(v) ? f(v, depth - 1) : v),
+            []
+          )
+        : arr.reduce((a, v) => a.concat(v), []);
+
+    return f(arr, depth);
   }
 };
 
