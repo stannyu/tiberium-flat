@@ -165,6 +165,29 @@ const arrayTiberiumHelper = {
    */
   dropRight: function(arr, n = 1) {
     return arr.slice(0, -n);
+  },
+  /**
+   *
+   * @param arr {Array<any>}
+   * @param nth {Number}
+   * @returns {Array<any>}
+   *
+   * Returns every nth element in an array.
+   * Use Array.filter() to create a new array that contains every nth element of a given array.
+   */
+  everyNth: function (arr, nth) {
+    return arr.filter((e, i) => i % nth === nth - 1);
+  },
+  /**
+   *
+   * @param arr {Array<any>}
+   * @returns {Array<any>}
+   *
+   * Filters out the non-unique values in an array.
+   * Use Array.filter() for an array containing only the unique values.
+   */
+  filterNonUnique: function (arr) {
+    return arr.filter(i => arr.indexOf(i) === arr.lastIndexOf(i))
   }
 };
 
