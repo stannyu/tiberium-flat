@@ -1,4 +1,4 @@
-const arrayTiberiumHelper = {
+const tfArray = {
   /**
    *
    * @param arr {Array || Array<[]>}
@@ -294,12 +294,173 @@ const arrayTiberiumHelper = {
    * Use Array.map() to map the values of an array to a function or property name.
    * Use Array.reduce() to create an object, where the keys are produced from the mapped results.
    */
-  groupBy: function (arr, fn) {
-    return arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val, i) => {
-      acc[val] = (acc[val] || []).concat(arr[i]);
-      return acc;
-    }, {})
+  groupBy: function(arr, fn) {
+    return arr
+      .map(typeof fn === "function" ? fn : val => val[fn])
+      .reduce((acc, val, i) => {
+        acc[val] = (acc[val] || []).concat(arr[i]);
+        return acc;
+      }, {});
+  },
+  /**
+   *
+   * @param arr {Array<any>}
+   * @return {any}
+   *
+   * Returns the head of a list.
+   * Use arr[0] to return the first element of the passed array.
+   */
+  head: arr => arr[0],
+  /**
+   *
+   * @param arr {Array<any>}
+   * @param val {any}
+   * @return {Array<Number>}
+   *
+   * Returns all indices of val in an array. If val never occurs, returns [].
+   * Use Array.forEach() to loop over elements and Array.push() to store indices for matching elements.
+   * Return the array of indices.
+   */
+  indexOfAll: (arr, val) => {
+    const indices = [];
+    arr.forEach((el, i) => el === val && indices.push(i));
+    return indices;
+  },
+  /**
+   *
+   * @param arr {Array<any>}
+   * @return {Array<any>}
+   *
+   * Returns all the elements of an array except the last one.
+   * Use arr.slice(0,-1) to return all but the last element of the array.
+   */
+  initial: arr => arr.slice(0, -1),
+  /**
+   *
+   * @param w {Number}
+   * @param h {Number}
+   * @param val {any}
+   * @return {any[][]}
+   *
+   * Initializes a 2D array of given width and height and value.
+   * Use Array.map() to generate h rows where each is a new array of size w initialize with value.
+   * If the value is not provided, default to null.
+   */
+  initialize2DArray: (w, h, val = null) =>
+    Array.from({ length: h }).map(() => Array.from({ length: w }).fill(val)),
+  /**
+   *
+   * @param end {Number}
+   * @param start {Number}
+   * @param step {Number}
+   * @return {number[]}
+   *
+   * Initializes an array containing the numbers in the specified range where start and end are
+   * inclusive with their common difference step.
+   *
+   * Use Array.from(Math.ceil((end+1-start)/step)) to create an array of the desired
+   * length(the amounts of elements is equal to (end-start)/step or (end+1-start)/step for inclusive end).
+   *
+   * Array.map() to fill with the desired values in a range. You can omit start to use a default value of 0.
+   * You can omit step to use a default value of 1.
+   */
+  initializeArrayWithRange: (end, start = 0, step = 1) =>
+    Array.from({ length: Math.ceil((end + 1 - start) / step) }).map(
+      (v, i) => i * step + start
+    ),
+  /**
+   *
+   * @param end {Number}
+   * @param start {Number}
+   * @param step {Number}
+   * @return {number[]}
+   *
+   * Initializes an array containing the numbers in the specified range (in reverse)
+   * where start and end are inclusive with their common difference step.
+   *
+   * Use Array.from(Math.ceil((end+1-start)/step)) to create an array of the desired
+   * length(the amounts of elements is equal to (end-start)/step or (end+1-start)/step for inclusive end).
+   *
+   * Array.map() to fill with the desired values in a range. You can omit start to use a default value of 0.
+   * You can omit step to use a default value of 1.
+   */
+  initializeArrayWithRangeRight: (end, start = 0, step = 1) =>
+    Array.from({ length: Math.ceil((end + 1 - start) / step) }).map(
+      (v, i, arr) => (arr.length - i - 1) * step + start
+    ),
+  /**
+   *
+   * @param n {Number}
+   * @param val {any}
+   * @return {any[]}
+   *
+   * Initializes and fills an array with the specified values.
+   * Use Array(n) to create an array of the desired length,
+   * fill(v) to fill it with the desired values.
+   * You can omit val to use a default value of 0.
+   */
+  initializeArrayWithValues: (n, val = 0) => Array(n).fill(val),
+  /**
+   *
+   * @param a {Array<any>}
+   * @param b {Array<any>}
+   * @return {Array<any>}
+   *
+   * Returns a list of elements that exist in both arrays.
+   * Create a Set from b, then use Array.filter() on a to only keep values contained in b.
+   */
+  intersection: (a, b) => {
+    const s = new Set(b);
+    return a.filter(x => s.has(x));
+  },
+  /**
+   *
+   * @param a
+   * @param b
+   * @param fn
+   * @return {*}
+   *
+   * Returns a list of elements that exist in both arrays, after applying the
+   * provided function to each array element of both.
+   *
+   * Create a Set by applying fn to all elements in b, then use Array.filter() on a to only keep elements,
+   * which produce values contained in b when fn is applied to them.
+   */
+  intersectionBy: (a, b, fn) => {
+    const s = new Set(b.map(x => fn(x)));
+    return a.filter(x => s.has(fn(x)));
+  },
+  /**
+   *
+   * @param a {Array<any>}
+   * @param b {Array<any>}
+   * @param comp {Function}
+   * @return {Array<any>}
+   *
+   * Returns a list of elements that exist in both arrays, using a provided comparator function.
+   * Use Array.filter() and Array.findIndex() in combination with the provided comparator to determine
+   * intersecting values.
+   */
+  intersectionWith: (a, b, comp) =>
+    a.filter(x => b.findIndex(y => comp(x, y)) !== -1),
+  /**
+   *
+   * @param arr {Array<any>}
+   * @return {number}
+   *
+   * Returns 1 if the array is sorted in ascending order,
+   * -1 if it is sorted in descending order or 0 if it is not sorted.
+   *
+   * Calculate the ordering direction for the first two elements.
+   * Use Object.entries() to loop over array objects and compare them in pairs.
+   * Return 0 if the direction changes or the direction if the last element is reached.
+   */
+  isSorted: arr => {
+    const direction = arr[0] > arr[1] ? -1 : 1;
+    for (let [i, val] of arr.entries())
+      if (i === arr.length - 1) return direction;
+      else if ((val - arr[i + 1]) * direction > 0) return 0;
   }
 };
 
-module.exports = arrayTiberiumHelper;
+module.exports = tfArray;

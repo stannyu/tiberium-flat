@@ -1,9 +1,9 @@
-const arrayTiberiumHelper = require("./sections/array");
-const valuesTiberiumHelper = require("./sections/values");
+const tfArray = require("./sections/array");
+const tfValue = require("./sections/values");
 
 const tf = {
-  array: arrayTiberiumHelper,
-  value: valuesTiberiumHelper
+  array: tfArray,
+  value: tfValue
 };
 
-module.exports = { tf, arrayTiberiumHelper, valuesTiberiumHelper };
+module.exports = { tf, tfArray, tfValue };
