@@ -473,13 +473,15 @@ const tfArray = {
    * Omit the second argument, separator, to use a default separator of ','.
    * Omit the third argument, end, to use the same value as separator by default.
    */
-  join: (arr, separator = ',', end = separator) =>
+  join: (arr, separator = ",", end = separator) =>
     arr.reduce(
       (acc, val, i) =>
         i === arr.length - 2
           ? acc + val + end
-          : i === arr.length - 1 ? acc + val : acc + val + separator,
-      ''
+          : i === arr.length - 1
+          ? acc + val
+          : acc + val + separator,
+      ""
     ),
   /**
    *
@@ -490,6 +492,15 @@ const tfArray = {
    * Use arr.length - 1 to compute the index of the last element of the given array and returning it.
    */
   last: arr => arr[arr.length - 1],
+  /**
+   *
+   * @param vals {Array<T>}
+   * @return {T}
+   *
+   * Takes any number of iterable objects or objects with a length property and returns the longest one.
+   * Use Array.sort() to sort all arguments by length, return the first (longest) one.
+   */
+  longestItem: (...vals) => [...vals].sort((a, b) => b.length - a.length)[0]
 };
 
 module.exports = tfArray;
