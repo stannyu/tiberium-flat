@@ -500,7 +500,26 @@ const tfArray = {
    * Takes any number of iterable objects or objects with a length property and returns the longest one.
    * Use Array.sort() to sort all arguments by length, return the first (longest) one.
    */
-  longestItem: (...vals) => [...vals].sort((a, b) => b.length - a.length)[0]
+  longestItem: (...vals) => [...vals].sort((a, b) => b.length - a.length)[0],
+  /**
+   *
+   * @param arr
+   * @param fn
+   * @return {*}
+   *
+   * Returns the n maximum elements from the provided array.
+   * If n is greater than or equal to the provided array's length, then return the original
+   * array(sorted in descending order).
+   * Use Array.sort() combined with the spread operator (...) to create a shallow clone of the array
+   * and sort it in descending order.
+   * Use Array.slice() to get the specified number of elements.
+   * Omit the second argument, n, to get a one-element array.
+   */
+  mapObject: (arr, fn) =>
+    (a => (
+      (a = [arr, arr.map(fn)]),
+      a[0].reduce((acc, val, ind) => ((acc[val] = a[1][ind]), acc), {})
+    ))()
 };
 
 module.exports = tfArray;
