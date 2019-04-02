@@ -562,6 +562,25 @@ const tfArray = {
    * Omit the second argument, n, to get the first element of the array.
    */
   nthElement: (arr, n = 0) => (n > 0 ? arr.slice(n, n + 1) : arr.slice(n))[0],
+  /**
+   *
+   * @param arr {Array<any>}
+   * @param fn {Function}
+   * @return {Array<Array>}
+   *
+   * Groups the elements into two arrays, depending on the provided function's truthiness for each element.
+   * Use Array.reduce() to create an array of two arrays.
+   * Use Array.push() to add elements for which fn returns true to the first array and elements
+   * for which fn returns false to the second one.
+   */
+  partition: (arr, fn) =>
+    arr.reduce(
+      (acc, val, i, arr) => {
+        acc(fn(val, i, arr) ? 0 : 1).push(val);
+        return acc;
+      },
+      [[], []]
+    )
 };
 
 module.exports = tfArray;
