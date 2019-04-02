@@ -537,8 +537,8 @@ const tfArray = {
   maxN: (arr, n = 1) => [...arr].sort((a, b) => b - a).slice(0, n),
   /**
    *
-   * @param arr
-   * @param n
+   * @param arr {Array<any>}
+   * @param n {Number}
    * @return {any[]}
    *
    * Returns the n minimum elements from the provided array. If n is greater than or equal
@@ -550,6 +550,18 @@ const tfArray = {
    * Omit the second argument, n, to get a one-element array.
    */
   minN: (arr, n = 1) => [...arr].sort((a, b) => a - b).slice(0, n),
+  /**
+   *
+   * @param arr {any[]}
+   * @param n {number}
+   * @return {any}
+   *
+   * Returns the nth element of an array.
+   * Use Array.slice() to get an array containing the nth element at the first place.
+   * If the index is out of bounds, return [].
+   * Omit the second argument, n, to get the first element of the array.
+   */
+  nthElement: (arr, n = 0) => (n > 0 ? arr.slice(n, n + 1) : arr.slice(n))[0],
 };
 
 module.exports = tfArray;
