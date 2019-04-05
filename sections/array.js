@@ -630,7 +630,9 @@ const tfArray = {
    */
   pullAtValue: (arr, pullArr) => {
     let removed = [],
-      pushToRemove = arr.forEach((v, i) => (pullArr.includes(v) ? removed.push(v) : v)),
+      pushToRemove = arr.forEach((v, i) =>
+        pullArr.includes(v) ? removed.push(v) : v
+      ),
       mutateTo = arr.filter((v, i) => !pullArr.includes(v));
     arr.length = 0;
     mutateTo.forEach(v => arr.push(v));
@@ -651,12 +653,34 @@ const tfArray = {
   pullBy: (arr, ...args) => {
     const length = args.length;
     let fn = length > 1 ? args[length - 1] : undefined;
-    fn = typeof fn == 'function' ? (args.pop(), fn) : undefined;
-    let argState = (Array.isArray(args[0]) ? args[0] : args).map(val => fn(val));
+    fn = typeof fn == "function" ? (args.pop(), fn) : undefined;
+    let argState = (Array.isArray(args[0]) ? args[0] : args).map(val =>
+      fn(val)
+    );
     let pulled = arr.filter((v, i) => !argState.includes(fn(v)));
     arr.length = 0;
     pulled.forEach(v => arr.push(v));
   },
+  /**
+   *
+   * @param data
+   * @param keys
+   * @param fn
+   * @return {*}
+   *
+   * Filter an array of objects based on a condition while also filtering out unspecified keys.
+   * Use Array.filter() to filter the array based on the predicate fn so that it returns the objects
+   * for which the condition returned a truthy value.
+   * On the filtered array, use Array.map() to return the new object
+   * using Array.reduce() to filter out the keys which were not supplied as the keys argument.
+   */
+  reducedFilter: (data, keys, fn) =>
+    data.filter(fn).map(el =>
+      keys.reduce((acc, key) => {
+        acc[key] = el[key];
+        return acc;
+      }, {})
+    )
 };
 
 module.exports = tfArray;
