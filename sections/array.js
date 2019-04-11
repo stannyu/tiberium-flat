@@ -710,7 +710,25 @@ const tfArray = {
    * the minimum element in the array.
    */
   reduceWhich: (arr, comparator = (a, b) => a - b) =>
-    arr.reduce((a, b) => (comparator(a, b) >= 0 ? b : a))
+    arr.reduce((a, b) => (comparator(a, b) >= 0 ? b : a)),
+  /**
+   *
+   * @param arr
+   * @param func
+   * @return {Array}
+   *
+   * Removes elements from an array for which the given function returns false.
+   * Use Array.filter() to find array elements that return truthy values
+   * and Array.reduce() to remove elements using Array.splice().
+   * The func is invoked with three arguments (value, index, array).
+   */
+  remove: (arr, func) =>
+    Array.isArray(arr)
+      ? arr.filter(func).reduce((acc, val) => {
+          arr.splice(arr.indexOf(val), 1);
+          return acc.concat(val);
+        }, [])
+      : []
 };
 
 module.exports = tfArray;
