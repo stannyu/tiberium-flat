@@ -728,7 +728,17 @@ const tfArray = {
           arr.splice(arr.indexOf(val), 1);
           return acc.concat(val);
         }, [])
-      : []
+      : [],
+  /**
+   *
+   * @param arr
+   * @return {*}
+   *
+   * Returns a random element from an array.
+   * Use Math.random() to generate a random number, multiply it by length and round it of to the nearest whole number
+   * using Math.floor(). This method also works with strings.
+   */
+  sample: arr => arr[Math.floor(Math.random() * arr.length)],
 };
 
 module.exports = tfArray;
