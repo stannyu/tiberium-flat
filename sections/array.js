@@ -680,7 +680,37 @@ const tfArray = {
         acc[key] = el[key];
         return acc;
       }, {})
-    )
+    ),
+  /**
+   *
+   * @param arr
+   * @param fn
+   * @param acc
+   * @return {*}
+   *
+   * Applies a function against an accumulator and each element in the array (from left to right),
+   * returning an array of successively reduced values.
+   * Use Array.reduce() to apply the given function to the given array, storing each new result.
+   */
+  reduceSuccessive: (arr, fn, acc) =>
+    arr.reduce(
+      (res, val, i, arr) => (res.push(fn(res.slice(-1)[0], val, i, arr)), res),
+      [acc]
+    ),
+  /**
+   *
+   * @param arr
+   * @param comparator
+   * @return {*}
+   *
+   * Returns the minimum/maximum value of an array, after applying the provided function to set comparing rule.
+   * Use Array.reduce() in combination with the comparator function
+   * to get the appropriate element in the array.
+   * You can omit the second parameter, comparator, to use the default one that returns
+   * the minimum element in the array.
+   */
+  reduceWhich: (arr, comparator = (a, b) => a - b) =>
+    arr.reduce((a, b) => (comparator(a, b) >= 0 ? b : a))
 };
 
 module.exports = tfArray;
